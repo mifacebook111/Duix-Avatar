@@ -16,6 +16,29 @@ pensada para desplegarse en **Vercel** desde la carpeta `web/` (Root Directory).
 | Voz (TTS) | **Microsoft Edge Neural TTS** vía [`msedge-tts`](https://github.com/Migushthe2nd/MsEdgeTTS) · voz `es-ES-ElviraNeural` | Gratis e ilimitado |
 | Micrófono (STT) | **Web Speech API** nativa del navegador (`es-ES`, latencia ~0) | Gratis |
 | Lip-sync | Visemas Oculus generados en el servidor con los *word boundaries* reales del motor TTS | Gratis |
+| Fondos de consultoría | 3 escenas SVG originales (energía, inmobiliario, noche) con selector en pantalla y luz del avatar adaptada a cada escena | Gratis |
+
+## 🎨 Diseño del escenario
+
+El avatar se presenta en un despacho de asesoría. Un selector discreto (abajo a la
+izquierda del escenario) cambia el fondo con transición suave y ajusta la
+iluminación 3D del avatar a cada ambiente:
+
+| Fondo | Escena | Luz |
+|---|---|---|
+| **Energía** | Despacho luminoso con infografía de eficiencia (casa + escala A-G) y libros técnicos | Luz cálida de día, intensa |
+| **Inmobiliario** | Estantería con carpeteros, maqueta de edificio, planos y gráfico de mercado | Luz cálida de tarde |
+| **Noche** | Lámpara de despacho, panel "Ahorra Energía, Ahorra Dinero" y ciudad de noche con bokeh | Ambiente oscuro con foco cálido |
+
+Las escenas son ilustraciones vectoriales (SVG) creadas para este proyecto —
+sin dependencias externas y con un peso de pocos KB cada una. La preferencia
+queda guardada en el navegador (`localStorage`).
+
+> Nota sobre la apariencia del avatar 3D: el modelo `mpfb.glb` (CC0) es el
+> único avatar conversacional con lip-sync de calidad disponible con licencia
+> libre en 2026 (el CDN de Ready Player Me desapareció). El color de pelo se
+> tiñe en caliente hacia castaño oscuro cálido; el rostro exacto de unas fotos
+> de referencia no es reproducible sobre un modelo CC0 genérico.
 
 ## 🗣️ Personalidad de Alba
 
@@ -66,8 +89,13 @@ web/
 │     └─ tts/route.js      # POST → msedge-tts (MP3 + visemas sincronizados)
 ├─ lib/
 │  └─ es-visemes.js        # español → visemas Oculus (grafo-fonético)
-└─ public/avatars/
-   └─ mpfb.glb             # avatar femenino CC0 (MakeHuman/MPFB)
+└─ public/
+   ├─ avatars/
+   │  └─ mpfb.glb          # avatar femenino CC0 (MakeHuman/MPFB)
+   └─ fondos/
+      ├─ despacho-energia.svg        # escena: asesoría energética
+      ├─ despacho-inmobiliario.svg   # escena: asesoría inmobiliaria
+      └─ modo-noche.svg              # escena: modo noche
 ```
 
 **Pipeline de conversación:**

@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Despacho de asesoría de noche, cálido y cercano, con luces de la ciudad">
+  <defs>
+    <linearGradient id="noche" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e141d"/>
+      <stop offset="1" stop-color="#070a10"/>
+    </linearGradient>
+    <linearGradient id="ventanaNoche" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a1728"/>
+      <stop offset="1" stop-color="#12283a"/>
+    </linearGradient>
+    <linearGradient id="conoLuz" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffcf8f" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#ffcf8f" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="lampara" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffdca6" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#ffdca6" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="d20" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="20"/></filter>
+    <filter id="d8" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="d4" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="4"/></filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#noche)"/>
+
+  <!-- ventana con ciudad de noche -->
+  <g>
+    <rect x="1020" y="70" width="530" height="530" rx="12" fill="url(#ventanaNoche)"/>
+    <circle cx="1420" cy="160" r="34" fill="#f4e9c8" opacity="0.9"/>
+    <circle cx="1420" cy="160" r="52" fill="#f4e9c8" opacity="0.2" filter="url(#d8)"/>
+    <!-- siluetas de edificios -->
+    <g fill="#060b12">
+      <rect x="1044" y="300" width="86" height="300"/>
+      <rect x="1140" y="250" width="70" height="350"/>
+      <rect x="1222" y="330" width="96" height="270"/>
+      <rect x="1330" y="280" width="64" height="320"/>
+      <rect x="1406" y="340" width="120" height="260"/>
+    </g>
+    <!-- ventanas encendidas -->
+    <g fill="#ffd98a" opacity="0.85">
+      <rect x="1056" y="316" width="10" height="14"/><rect x="1080" y="316" width="10" height="14"/>
+      <rect x="1056" y="352" width="10" height="14"/><rect x="1104" y="388" width="10" height="14"/>
+      <rect x="1152" y="270" width="10" height="14"/><rect x="1184" y="306" width="10" height="14"/>
+      <rect x="1152" y="342" width="10" height="14"/><rect x="1184" y="378" width="10" height="14"/>
+      <rect x="1238" y="348" width="10" height="14"/><rect x="1266" y="348" width="10" height="14"/>
+      <rect x="1238" y="384" width="10" height="14"/><rect x="1294" y="420" width="10" height="14"/>
+      <rect x="1342" y="296" width="10" height="14"/><rect x="1370" y="332" width="10" height="14"/>
+      <rect x="1342" y="368" width="10" height="14"/>
+      <rect x="1422" y="358" width="10" height="14"/><rect x="1450" y="394" width="10" height="14"/>
+      <rect x="1490" y="358" width="10" height="14"/><rect x="1462" y="430" width="10" height="14"/>
+      <rect x="1520" y="394" width="10" height="14"/>
+    </g>
+    <!-- farolas cálidas -->
+    <g fill="#ffb45e" opacity="0.7">
+      <rect x="1060" y="560" width="6" height="40"/>
+      <rect x="1300" y="560" width="6" height="40"/>
+    </g>
+    <!-- reflejo de la mesa en el cristal -->
+    <rect x="1020" y="70" width="530" height="530" rx="12" fill="#7fa8c8" opacity="0.05"/>
+  </g>
+
+  <!-- bokeh de la ciudad fuera de foco -->
+  <g filter="url(#d8)">
+    <circle cx="1090" cy="230" r="16" fill="#ffd9a0" opacity="0.5"/>
+    <circle cx="1180" cy="180" r="12" fill="#9ad7c8" opacity="0.45"/>
+    <circle cx="1280" cy="240" r="18" fill="#ffb45e" opacity="0.4"/>
+    <circle cx="1390" cy="200" r="13" fill="#ffd9a0" opacity="0.5"/>
+    <circle cx="1480" cy="260" r="15" fill="#9ad7c8" opacity="0.4"/>
+    <circle cx="1120" cy="420" r="14" fill="#ffb45e" opacity="0.35"/>
+    <circle cx="1460" cy="470" r="12" fill="#ffd9a0" opacity="0.35"/>
+    <circle cx="1240" cy="500" r="16" fill="#9ad7c8" opacity="0.3"/>
+  </g>
+
+  <!-- lámpara de despacho encendida -->
+  <g>
+    <ellipse cx="330" cy="238" rx="120" ry="90" fill="url(#lampara)" filter="url(#d8)"/>
+    <rect x="322" y="180" width="16" height="330" rx="8" fill="#3a3026"/>
+    <path d="M250 190 q 80 -60 160 0 Z" fill="#4a3e30"/>
+    <ellipse cx="330" cy="192" rx="76" ry="16" fill="#ffdf9e" opacity="0.9" filter="url(#d4)"/>
+    <polygon points="262,196 398,196 560,600 100,600" fill="url(#conoLuz)" filter="url(#d8)"/>
+    <ellipse cx="330" cy="522" rx="14" ry="8" fill="#3a3026"/>
+  </g>
+
+  <!-- monitor con panel de ahorro -->
+  <g>
+    <ellipse cx="880" cy="612" rx="300" ry="22" fill="#000000" opacity="0.4" filter="url(#d20)"/>
+    <rect x="640" y="150" width="480" height="310" rx="18" fill="#141b22"/>
+    <rect x="658" y="168" width="444" height="274" rx="10" fill="#0c1216"/>
+    <g font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="700" letter-spacing="2">
+      <text x="694" y="228" font-size="30" fill="#5ef2b0" opacity="0.65" filter="url(#d4)">AHORRA ENERGÍA,</text>
+      <text x="694" y="270" font-size="30" fill="#5ef2b0" opacity="0.65" filter="url(#d4)">AHORRA DINERO</text>
+      <text x="694" y="228" font-size="30" fill="#8ff7cc">AHORRA ENERGÍA,</text>
+      <text x="694" y="270" font-size="30" fill="#8ff7cc">AHORRA DINERO</text>
+    </g>
+    <!-- minigráfico de consumo -->
+    <g>
+      <rect x="694" y="310" width="44" height="70" rx="5" fill="#1d5c46"/>
+      <rect x="748" y="330" width="44" height="50" rx="5" fill="#237a5a"/>
+      <rect x="802" y="350" width="44" height="30" rx="5" fill="#2fae7d"/>
+      <rect x="856" y="360" width="44" height="20" rx="5" fill="#5ef2b0"/>
+      <path d="M700 330 L876 372" stroke="#ffcf8f" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+    </g>
+    <g font-family="system-ui, sans-serif" font-size="17" fill="#3f6f5c">
+      <text x="940" y="336">−30 % factura</text>
+      <text x="940" y="366">Consumo optimizado</text>
+    </g>
+    <rect x="820" y="460" width="120" height="14" rx="7" fill="#0a0e12"/>
+  </g>
+
+  <!-- escritorio en sombra -->
+  <rect x="120" y="600" width="1380" height="42" rx="12" fill="#2a2018"/>
+  <rect x="120" y="642" width="1380" height="12" fill="#1f1811"/>
+  <rect x="180" y="654" width="24" height="190" fill="#1f1811"/>
+  <rect x="1400" y="654" width="24" height="190" fill="#1f1811"/>
+
+  <!-- objetos cálidos sobre la mesa -->
+  <g transform="translate(180,556)">
+    <rect x="0" y="6" width="120" height="38" rx="5" fill="#3d3125"/>
+    <rect x="8" y="-2" width="104" height="30" rx="4" fill="#57462f"/>
+  </g>
+  <g transform="translate(1180,556)">
+    <rect x="0" y="0" width="46" height="44" rx="9" fill="#3d3125"/>
+    <path d="M46 10 q 22 9 0 24" fill="none" stroke="#3d3125" stroke-width="6"/>
+    <ellipse cx="23" cy="6" rx="18" ry="5" fill="#c9a267" opacity="0.8"/>
+  </g>
+
+  <!-- planta en penumbra -->
+  <g>
+    <g transform="translate(80,600)">
+      <ellipse cx="0" cy="-90" rx="24" ry="88" fill="#123528" transform="rotate(-26)"/>
+      <ellipse cx="0" cy="-95" rx="25" ry="92" fill="#163f2e"/>
+      <ellipse cx="0" cy="-90" rx="24" ry="88" fill="#123528" transform="rotate(26)"/>
+      <ellipse cx="0" cy="-110" rx="20" ry="82" fill="#1a4c37" transform="rotate(-54)"/>
+      <ellipse cx="0" cy="-110" rx="20" ry="82" fill="#1a4c37" transform="rotate(54)"/>
+    </g>
+    <path d="M44 540 h72 l-10 64 h-52 Z" fill="#241c14"/>
+  </g>
+
+  <!-- viñeta -->
+  <rect width="1600" height="900" fill="#05070b" opacity="0.25" filter="url(#d20)"/>
+</svg>

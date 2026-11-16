@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Despacho de asesoría energética, luminoso, con infografía de eficiencia energética">
+  <defs>
+    <linearGradient id="pared" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8f2e7"/>
+      <stop offset="0.7" stop-color="#efe3d0"/>
+      <stop offset="1" stop-color="#e5d6bf"/>
+    </linearGradient>
+    <linearGradient id="cielo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e6f3f7"/>
+      <stop offset="1" stop-color="#f8f0de"/>
+    </linearGradient>
+    <linearGradient id="suelo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dcc094"/>
+      <stop offset="1" stop-color="#c8a672"/>
+    </linearGradient>
+    <radialGradient id="sol" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fff6dc" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#fff6dc" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="d18" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="d6" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
+  </defs>
+
+  <!-- pared y suelo -->
+  <rect width="1600" height="900" fill="url(#pared)"/>
+  <rect y="640" width="1600" height="260" fill="url(#suelo)"/>
+  <g stroke="#b8965f" stroke-width="2" opacity="0.3">
+    <line x1="0" y1="706" x2="1600" y2="706"/>
+    <line x1="0" y1="778" x2="1600" y2="778"/>
+    <line x1="0" y1="846" x2="1600" y2="846"/>
+  </g>
+
+  <!-- ventana con luz de día -->
+  <g>
+    <rect x="60" y="90" width="480" height="520" rx="14" fill="url(#cielo)"/>
+    <ellipse cx="150" cy="180" rx="170" ry="120" fill="url(#sol)"/>
+    <g opacity="0.5">
+      <rect x="100" y="330" width="70" height="240" fill="#cfe0dd"/>
+      <rect x="190" y="290" width="55" height="280" fill="#dde8e3"/>
+      <rect x="265" y="360" width="80" height="210" fill="#cfe0dd"/>
+      <rect x="365" y="300" width="60" height="270" fill="#dde8e3"/>
+      <rect x="445" y="380" width="70" height="190" fill="#cfe0dd"/>
+      <rect x="100" y="470" width="30" height="18" fill="#f4efe2" opacity="0.8"/>
+      <rect x="285" y="400" width="26" height="16" fill="#f4efe2" opacity="0.8"/>
+      <rect x="380" y="350" width="28" height="16" fill="#f4efe2" opacity="0.8"/>
+    </g>
+    <rect x="60" y="90" width="480" height="520" rx="14" fill="none" stroke="#ffffff" stroke-width="16" opacity="0.85"/>
+    <line x1="300" y1="98" x2="300" y2="602" stroke="#ffffff" stroke-width="10" opacity="0.85"/>
+  </g>
+
+  <!-- pantalla con infografía de eficiencia -->
+  <g>
+    <ellipse cx="1160" cy="600" rx="300" ry="20" fill="#000000" opacity="0.14" filter="url(#d18)"/>
+    <rect x="880" y="110" width="560" height="336" rx="18" fill="#22343c"/>
+    <rect x="900" y="130" width="520" height="296" rx="10" fill="#fbfaf5"/>
+    <text x="940" y="186" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="30" font-weight="700" fill="#0c6b4e" letter-spacing="2">EFICIENCIA ENERGÉTICA</text>
+    <!-- casa con hoja -->
+    <g transform="translate(952,214)">
+      <rect x="0" y="46" width="112" height="82" fill="#0f8a5f"/>
+      <polygon points="-14,46 56,-10 126,46" fill="#0b5c40"/>
+      <circle cx="56" cy="47" r="31" fill="#ffffff"/>
+      <path d="M56 64 C 39 60, 37 40, 56 26 C 75 40, 73 60, 56 64 Z" fill="#2fae7d"/>
+      <line x1="56" y1="62" x2="56" y2="30" stroke="#0c6b4e" stroke-width="4"/>
+    </g>
+    <!-- escala A-G -->
+    <g transform="translate(1122,208)" font-family="system-ui, sans-serif" font-size="27" font-weight="700" fill="#ffffff" text-anchor="middle">
+      <rect x="0" y="0" width="60" height="54" rx="7" fill="#00a651"/><text x="30" y="38">A</text>
+      <rect x="64" y="15" width="60" height="54" rx="7" fill="#52b153"/><text x="94" y="53">B</text>
+      <rect x="128" y="30" width="60" height="54" rx="7" fill="#9aca3c"/><text x="158" y="68">C</text>
+      <rect x="192" y="45" width="60" height="54" rx="7" fill="#f3eb1c"/><text x="222" y="83">D</text>
+      <rect x="256" y="60" width="60" height="54" rx="7" fill="#f39200"/><text x="286" y="98">E</text>
+      <rect x="320" y="75" width="60" height="54" rx="7" fill="#ee7203"/><text x="350" y="113">F</text>
+      <rect x="384" y="90" width="60" height="54" rx="7" fill="#e63323"/><text x="414" y="128">G</text>
+    </g>
+    <text x="940" y="398" font-family="system-ui, sans-serif" font-size="18" fill="#7d8d86">Certificado de eficiencia · Escala A–G · Ahorro medio 30 %</text>
+  </g>
+
+  <!-- planta alta a la derecha -->
+  <g>
+    <ellipse cx="1543" cy="640" rx="88" ry="14" fill="#5b4632" opacity="0.3" filter="url(#d6)"/>
+    <g transform="translate(1543,622)">
+      <ellipse cx="0" cy="-95" rx="26" ry="96" fill="#2f7d5b" transform="rotate(-26)"/>
+      <ellipse cx="0" cy="-100" rx="27" ry="100" fill="#3a9168"/>
+      <ellipse cx="0" cy="-95" rx="26" ry="96" fill="#2f7d5b" transform="rotate(26)"/>
+      <ellipse cx="0" cy="-118" rx="22" ry="88" fill="#46a377" transform="rotate(-52)"/>
+      <ellipse cx="0" cy="-118" rx="22" ry="88" fill="#46a377" transform="rotate(52)"/>
+    </g>
+    <path d="M1497 560 h92 l-12 82 h-68 Z" fill="#b9713f"/>
+    <rect x="1493" y="552" width="100" height="12" rx="6" fill="#a35f31"/>
+  </g>
+
+  <!-- escritorio -->
+  <ellipse cx="800" cy="854" rx="640" ry="26" fill="#000000" opacity="0.1" filter="url(#d18)"/>
+  <rect x="170" y="598" width="1260" height="46" rx="12" fill="#e5c795"/>
+  <rect x="170" y="644" width="1260" height="14" fill="#cbaa70"/>
+  <rect x="230" y="658" width="26" height="186" fill="#cbaa70"/>
+  <rect x="1340" y="658" width="26" height="186" fill="#cbaa70"/>
+
+  <!-- libros técnicos -->
+  <g transform="translate(300,572)">
+    <rect x="0" y="12" width="196" height="17" rx="4" fill="#0f8a5f"/>
+    <rect x="10" y="-7" width="176" height="17" rx="4" fill="#ece6d5"/>
+    <rect x="24" y="-26" width="148" height="17" rx="4" fill="#caa64e"/>
+    <text x="30" y="-14" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#5c4a1f">SOSTENIBILIDAD</text>
+  </g>
+
+  <!-- portátil abierto -->
+  <g transform="translate(700,462)">
+    <rect x="62" y="0" width="180" height="122" rx="10" fill="#d9d6cd"/>
+    <rect x="72" y="10" width="160" height="102" rx="6" fill="#c3c0b6"/>
+    <path d="M-4 142 L28 122 L276 122 L308 142 Z" fill="#cfccc2"/>
+    <rect x="-22" y="140" width="352" height="16" rx="8" fill="#bdbab0"/>
+  </g>
+
+  <!-- taza y calculadora -->
+  <g transform="translate(1085,558)">
+    <rect x="0" y="0" width="46" height="44" rx="9" fill="#ffffff"/>
+    <path d="M46 10 q 24 9 0 26" fill="none" stroke="#ffffff" stroke-width="6"/>
+  </g>
+  <g transform="translate(1170,566)">
+    <rect x="0" y="0" width="70" height="36" rx="6" fill="#33413c"/>
+    <rect x="6" y="5" width="58" height="10" rx="2" fill="#9fd8bd"/>
+    <g fill="#e8e4d8">
+      <rect x="6" y="19" width="12" height="6" rx="2"/><rect x="22" y="19" width="12" height="6" rx="2"/>
+      <rect x="38" y="19" width="12" height="6" rx="2"/><rect x="54" y="19" width="10" height="6" rx="2"/>
+    </g>
+  </g>
+
+  <!-- planta de escritorio -->
+  <g transform="translate(1190,566)">
+    <ellipse cx="0" cy="-34" rx="36" ry="17" fill="#0f8a5f" transform="rotate(-22)"/>
+    <ellipse cx="0" cy="-36" rx="36" ry="17" fill="#2fae7d"/>
+    <ellipse cx="0" cy="-34" rx="36" ry="17" fill="#0f8a5f" transform="rotate(22)"/>
+    <rect x="-26" y="-10" width="52" height="40" rx="7" fill="#ffffff"/>
+  </g>
+
+  <!-- luz cálida global -->
+  <rect width="1600" height="900" fill="url(#sol)" opacity="0.2"/>
+</svg>

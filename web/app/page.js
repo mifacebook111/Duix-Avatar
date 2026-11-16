@@ -8,6 +8,50 @@ const AVATAR_URL = '/avatars/mpfb.glb'; // CC0 · compatible TalkingHead (rig Mi
 const GREETING =
   '¡Hola! Encantada de conocerte. Soy Alba, tu asesora personal. Pregúntame lo que quieras: eficiencia energética, vivienda, inversiones… o simplemente charlar. Te escucho.';
 
+/* Fondos de consultoría: el selector cambia la escena y la luz del avatar */
+const FONDOS = [
+  {
+    id: 'energia',
+    label: 'Energía',
+    img: '/fondos/despacho-energia.svg',
+    lighting: {
+      lightAmbientColor: '#fff1e2',
+      lightAmbientIntensity: 1.0,
+      lightDirectColor: '#fff3e0',
+      lightDirectIntensity: 1.5,
+      lightSpotColor: '#ffffff',
+      lightSpotIntensity: 1.1,
+    },
+  },
+  {
+    id: 'inmobiliario',
+    label: 'Inmobiliario',
+    img: '/fondos/despacho-inmobiliario.svg',
+    lighting: {
+      lightAmbientColor: '#ffedd8',
+      lightAmbientIntensity: 0.9,
+      lightDirectColor: '#ffe7c8',
+      lightDirectIntensity: 1.35,
+      lightSpotColor: '#fff1dd',
+      lightSpotIntensity: 1.2,
+    },
+  },
+  {
+    id: 'noche',
+    label: 'Noche',
+    img: '/fondos/modo-noche.svg',
+    lighting: {
+      lightAmbientColor: '#2a3550',
+      lightAmbientIntensity: 0.55,
+      lightDirectColor: '#9db8d8',
+      lightDirectIntensity: 0.55,
+      lightSpotColor: '#ffc98d',
+      lightSpotIntensity: 1.5,
+      lightSpotDispersion: 0.72,
+    },
+  },
+];
+
 const STATE_LABEL = {
   boot: 'Cargando avatar…',
   ready: 'En línea',
@@ -80,6 +124,28 @@ function base64ToArrayBuffer(b64) {
   return bytes.buffer;
 }
 
+/**
+ * Aproxima el avatar CC0 (mpfb.glb) a la personaje de referencia:
+ * tinte castaño oscuro con reflejos cálidos en el pelo. Es lo único
+ * modificable en caliente sobre el modelo base; el resto (pecas, rostro,
+ * ropa) viene fijado en el GLB.
+ */
+function restyleAvatar(head) {
+  try {
+    head?.avatar?.traverse?.((o) => {
+      if (!o.isMesh || !o.material) return;
+      const n = `${o.name || ''} ${o.parent?.name || ''}`.toLowerCase();
+      if (!/hair|ponytail|scalp/.test(n)) return;
+      const mats = Array.isArray(o.material) ? o.material : [o.material];
+      for (const m of mats) {
+        if (!m?.color) continue;
+        // con textura el color multiplica (castaño cálido); sin textura, castaño oscuro
+        m.color.set(m.map ? '#9a7255' : '#3e2417');
+      }
+    });
+  } catch {}
+}
+
 /* ───────────────────────────── Página ───────────────────────────── */
 
 export default function Home() {
@@ -92,6 +158,7 @@ export default function Home() {
   const [error, setError] = useState('');
   const [speechSupported, setSpeechSupported] = useState(true);
   const [started, setStarted] = useState(false);
+  const [fondoId, setFondoId] = useState(FONDOS[0].id);
 
   const avatarElRef = useRef(null);
   const headRef = useRef(null);
@@ -101,6 +168,7 @@ export default function Home() {
   const chainRef = useRef(Promise.resolve());
   const msgsRef = useRef([]); // historial para la API
   const busyRef = useRef(false);
+  const fondoIdRef = useRef(FONDOS[0].id);
 
   /* ── Cargar TalkingHead y el avatar 3D ── */
   useEffect(() => {
@@ -139,6 +207,12 @@ export default function Home() {
         );
 
         if (cancelled) return;
+        // aspect: tinte de pelo + luz según el fondo activo
+        restyleAvatar(head);
+        try {
+          const f = FONDOS.find((x) => x.id === fondoIdRef.current);
+          head.setLighting?.(f?.lighting);
+        } catch {}
         setLoadProgress(100);
         setPhase('ready');
       } catch (e) {
@@ -156,6 +230,32 @@ export default function Home() {
         headRef.current?.stop?.();
       } catch {}
     };
+  }, []);
+
+  /* ── Fondo de consultoría: preferencia guardada + luz adaptada ── */
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('alba:fondo');
+      if (saved && FONDOS.some((f) => f.id === saved)) {
+        fondoIdRef.current = saved;
+        setFondoId(saved);
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    const f = FONDOS.find((x) => x.id === fondoId);
+    try {
+      headRef.current?.setLighting?.(f?.lighting);
+    } catch {}
+  }, [fondoId]);
+
+  const changeFondo = useCallback((id) => {
+    fondoIdRef.current = id;
+    setFondoId(id);
+    try {
+      localStorage.setItem('alba:fondo', id);
+    } catch {}
   }, []);
 
   /* ── Voz: sintetiza una frase y la encola en orden con lip-sync ── */
@@ -396,7 +496,7 @@ export default function Home() {
       {/* Cabecera */}
       <header className="relative z-10 flex items-center justify-between px-5 py-3 sm:px-8">
         <div className="flex items-center gap-3">
-          <div className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-rose-400 to-fuchsia-500 text-sm font-bold text-white shadow-lg shadow-fuchsia-500/25">
+          <div className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 text-sm font-bold text-white shadow-lg shadow-emerald-500/25">
             A
           </div>
           <div>
@@ -410,14 +510,44 @@ export default function Home() {
       {/* Escenario */}
       <section className="relative z-10 flex min-h-0 flex-1 gap-4 px-4 pb-3 sm:px-8">
         {/* Avatar */}
-        <div className="relative min-w-0 flex-1">
-          <div ref={avatarElRef} className="absolute inset-0 cursor-grab active:cursor-grabbing" />
+        <div className="relative min-w-0 flex-1 overflow-hidden rounded-3xl border border-white/[0.06] bg-black/30">
+          {/* Fondos de consultoría (crossfade) */}
+          {FONDOS.map((f) => (
+            <div
+              key={f.id}
+              aria-hidden
+              className={`fondo-layer ${fondoId === f.id ? 'fondo-visible' : ''}`}
+              style={{ backgroundImage: `url(${f.img})` }}
+            />
+          ))}
+          <div className="fondo-velo" aria-hidden />
+
+          <div ref={avatarElRef} className="absolute inset-0 z-10 cursor-grab active:cursor-grabbing" />
+
+          {/* Selector de fondo */}
+          <div className="glass absolute bottom-4 left-4 z-20 flex items-center gap-1 rounded-full p-1">
+            {FONDOS.map((f) => (
+              <button
+                key={f.id}
+                type="button"
+                onClick={() => changeFondo(f.id)}
+                title={`Fondo: ${f.label}`}
+                className={`rounded-full px-3.5 py-1.5 text-[11px] font-medium tracking-wide transition ${
+                  fondoId === f.id
+                    ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30'
+                    : 'text-white/60 hover:bg-white/10 hover:text-white'
+                }`}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
 
           {/* Carga */}
           {phase === 'boot' && (
             <div className="absolute inset-0 grid place-items-center">
               <div className="glass flex w-72 flex-col items-center gap-4 rounded-3xl p-8 text-center">
-                <div className="h-10 w-10 animate-spin rounded-full border-2 border-white/15 border-t-rose-400" />
+                <div className="h-10 w-10 animate-spin rounded-full border-2 border-white/15 border-t-emerald-400" />
                 <p className="text-sm text-white/70">
                   {loadProgress < 100
                     ? `Ajustando los detalles de Alba… ${loadProgress}%`
@@ -425,7 +555,7 @@ export default function Home() {
                 </p>
                 <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-rose-400 to-fuchsia-400 transition-all duration-300"
+                    className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 transition-all duration-300"
                     style={{ width: `${loadProgress}%` }}
                   />
                 </div>
@@ -438,7 +568,7 @@ export default function Home() {
             <div className="absolute inset-x-0 bottom-6 grid place-items-center">
               <button
                 onClick={beginConversation}
-                className="group relative overflow-hidden rounded-full bg-gradient-to-r from-rose-500 to-fuchsia-500 px-8 py-3.5 text-sm font-semibold text-white shadow-xl shadow-fuchsia-500/30 transition hover:scale-[1.03] active:scale-95"
+                className="group relative overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-3.5 text-sm font-semibold text-[#fdf9ef] shadow-xl shadow-emerald-500/30 transition hover:scale-[1.03] active:scale-95"
               >
                 Comenzar conversación
               </button>
@@ -469,7 +599,7 @@ export default function Home() {
                 key={i}
                 className={`msg-in max-w-[92%] rounded-2xl px-3.5 py-2.5 leading-relaxed ${
                   m.role === 'user'
-                    ? 'self-end bg-rose-500/20 text-rose-50'
+                    ? 'self-end bg-emerald-500/20 text-emerald-50'
                     : 'self-start bg-white/[0.06] text-white/85'
                 }`}
               >
@@ -477,7 +607,7 @@ export default function Home() {
               </div>
             ))}
             {interim && (
-              <div className="self-end rounded-2xl bg-rose-500/10 px-3.5 py-2.5 italic text-rose-200/70">
+              <div className="self-end rounded-2xl bg-emerald-500/10 px-3.5 py-2.5 italic text-emerald-200/70">
                 {interim}…
               </div>
             )}
@@ -505,7 +635,7 @@ export default function Home() {
             title={speechSupported ? 'Micrófono (es-ES)' : 'Tu navegador no soporta reconocimiento de voz; usa Chrome'}
             className={`grid h-11 w-11 place-items-center rounded-full text-white transition disabled:cursor-not-allowed disabled:opacity-40 ${
               isListening
-                ? 'mic-live bg-rose-500 shadow-lg shadow-rose-500/40'
+                ? 'mic-live bg-emerald-500 shadow-lg shadow-emerald-500/40'
                 : 'bg-white/10 hover:bg-white/20'
             }`}
           >
@@ -515,13 +645,13 @@ export default function Home() {
           <button
             type="submit"
             disabled={!input.trim() || busyRef.current}
-            className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-rose-500 to-fuchsia-500 text-white shadow-lg shadow-fuchsia-500/25 transition hover:opacity-90 disabled:opacity-30"
+            className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25 transition hover:opacity-90 disabled:opacity-30"
           >
             <SendIcon />
           </button>
         </form>
         <p className="mt-2 text-center text-[11px] text-white/30">
-          Voz neural es-ES gratuita (Edge TTS) · Cerebro Llama 3.3 70B en Groq · Lip-sync TalkingHead/WebGL
+          Voz neural es-ES gratuita (Edge TTS) · Cerebro gpt-oss-120b en Groq · Fondos de consultoría y luz adaptados · Lip-sync TalkingHead/WebGL
         </p>
       </footer>
     </main>
@@ -533,7 +663,7 @@ export default function Home() {
 function StatusChip({ phase }) {
   const color =
     phase === 'listening'
-      ? 'bg-rose-400'
+      ? 'bg-teal-300'
       : phase === 'thinking'
         ? 'bg-amber-300'
         : phase === 'speaking'
@@ -555,7 +685,7 @@ function EqIndicator() {
       {[0, 1, 2, 3].map((i) => (
         <span
           key={i}
-          className="eq-bar h-4 w-[3px] rounded-full bg-fuchsia-300"
+          className="eq-bar h-4 w-[3px] rounded-full bg-emerald-300"
           style={{ animationDelay: `${i * 0.13}s` }}
         />
       ))}
