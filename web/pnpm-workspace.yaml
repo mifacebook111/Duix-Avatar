@@ -1,0 +1,5 @@
+# Configuración pnpm 11.
+# msedge-tts tiene un script `preinstall` trivial (comprueba que se use pnpm):
+# lo aprobamos para que `pnpm install` termine con éxito también en Vercel.
+allowBuilds:
+  msedge-tts: true
